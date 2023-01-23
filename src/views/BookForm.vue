@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1>Formulario para insertar libros</h1>
-    <div v-if='errores.length>0'>
+    <div v-if="errores.length > 0">
       <p><b>Por favor, solucina los siguientes errores:</b></p>
       <ul>
         <li v-for="error in errores">{{ error }}</li>
       </ul>
     </div>
-    <div class="row" @submit="checkForm">
+    <div class="row">
       <div class="col-sm-6 col-md-4 col-lg-4 hideElement">
-        <form id="new-prod">
+        <form id="new-prod" @submit.prevent>
           <fieldset>
             <legend class="bg-dark text-white text-center" v-if="id">Editar Libro</legend>
             <legend class="bg-dark text-white text-center" v-else>Añadir Libro</legend>
@@ -46,8 +46,8 @@
               type="text"
               id="newprod-name"
               class="form-control"
-              minlength="10"
-              maxlength="10"
+              minlength="8"
+              maxlength="12"
               v-model="book.ISBN"
               required
             />
@@ -56,9 +56,9 @@
 
           <div class="form-group">
             <label for="newprod-name">Genero:</label>
-            <select name="genere" id="genere" v-model="book.tema">
+            <select name="genere" id="genere" v-model="book.tema" required>
               <option value="" disabled>--Selecciona el genero--</option>
-              <option v-for="genere in generes" :value="genere.id">
+              <option v-for="genere in generes" :key="genere.id" :value="genere.id">
                 {{ genere.nombre }}
               </option>
             </select>
@@ -70,7 +70,7 @@
             <label for="newprod-name">Autor:</label>
             <select name="author" id="author" v-model="book.autor" required>
               <option value="" disabled>--Selecciona el/la autor--</option>
-              <option v-for="author in authors" :value="author.id">
+              <option v-for="author in authors" :key="author.id" :value="author.id">
                 {{ author.nombre }}
               </option>
             </select>
@@ -95,6 +95,7 @@
               id="newprod-name"
               class="form-control"
               v-model="book.img"
+              required
             />
             <span class="error"></span>
           </div>
@@ -102,7 +103,7 @@
             type="submit"
             class="btn btn-default btn-dark"
             v-if="id"
-            @click="editNewBook"
+            @click="checkForm"
           >
             Editar
           </button>
@@ -110,7 +111,7 @@
             type="submit"
             class="btn btn-default btn-dark"
             v-else
-            @click="addNewBook"
+            @click="checkForm"
           >
             Enviar
           </button>
@@ -144,47 +145,40 @@ export default {
       generes: "generes",
       authors: "authors",
     }),
-    addNewBook() {
-      if (this.book.nombre && this.book.ISBN && this.book.autor) {
-        this.addBook(this.book);
-      }
-    },
-    editNewBook() {
-      if (this.book.nombre && this.book.ISBN && this.book.autor) {
-        this.editBook(this.book);
-      }
-    },
-    checkForm(event) {
-      this.errores=[];    // borramos los errores anteriores
-
-      //nombre
-      if (!this.book.nombre) {
-        this.errores.push('El nombre es obligatorio');
-      } else if (this.user.nombre.length<2 || this.user.nombre.length>50) {
-        this.errores.push('La longitud del nombre debe estar entre 2 y 50 caracteres');
-      }
-
-      if (!this.book.ISBN) {
-        this.errores.push('El nombre es obligatorio');
-      } else if (this.user.ISBN.length === 10) {
-        this.errores.push('La longitud del nombre debe ser de 10');
-      }
-
-      if (!this.book.tema) {
-        this.errores.push('Debes escoger el genero');
-      }
-
-      if (!this.book.autor) {
-        this.errores.push('Debes escoger el autor');
-      }
-      if (this.errores.length>0) {
-        event.preventDefault();
-      }
-    }
-
+    
+    
   },
   methods: {
     ...mapActions(useCounterStore, ["addBook", "getBookById", "editBook"]),
+    checkForm() {
+      this.errores = []; // borramos los errores anteriores
+
+      //nombre
+      if (!this.book.nombre) {
+        this.errores.push("El nombre es obligatorio");
+      } else if (this.book.nombre.length < 2 || this.book.nombre.length > 50) {
+        this.errores.push("La longitud del nombre debe estar entre 2 y 50 caracteres");
+      }
+
+      if (!this.book.ISBN) {
+        this.errores.push("El ISBN es obligatorio");
+      } else if (this.book.ISBN.length < 8 || 16 < this.book.ISBN.length) {
+        this.errores.push("La longitud del ISBN debe ser de 10");
+      }
+
+      if (!this.book.tema) {
+        this.errores.push("Debes escoger el genero");
+      }
+
+      if (!this.book.autor) {
+        this.errores.push("Debes escoger el autor");
+      }
+      if (this.errores.length == 0 && this.id) {
+        this.editBook(this.book);
+      }else if(this.errores.length == 0 && !this.id){
+        this.addBook(this.book);
+      }
+    },
   },
   async mounted() {
     if (this.id) {

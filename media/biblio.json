@@ -43,7 +43,8 @@
   "libros": [
     {
       "ISBN": "0130313580",
-      "nombre": "Sistemas operativos modernos",
+      "nombre": "Sistemas operativos modernos prueba788",
+      "tema": 8,
       "autor": 3,
       "desc": "El Sistemas Operativo tiene como misión administrar todos los elementos de un sistema complejo. ",
       "img": "sistemasOperativosModernos.jpeg",
@@ -110,7 +111,17 @@
       "autor": 3,
       "desc": "Una computadora digital es una máquina que puede hacer el trabajo para las personas mediante la realización de las instrucciones dadas a la misma.",
       "img": "structuredComputerOrganization.jpeg",
-      "id": 9
+      "id": 9,
+      "tema": 8
+    },
+    {
+      "ISBN": "1234567890",
+      "nombre": "aaaaaaaaaaaaaa",
+      "tema": 1,
+      "autor": 1,
+      "desc": "aaaaaa",
+      "img": "laSirenita.jpeg",
+      "id": 10
     }
   ]
 }

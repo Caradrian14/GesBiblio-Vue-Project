@@ -39,23 +39,17 @@ export const useCounterStore = defineStore('counter', {
     },
 
     editBook(book) {
-      axios.put(url + '/libros/' + book.id, {
+      axios.patch(url + '/libros/' + book.id, {
         ISBN: book.ISBN,
         nombre: book.nombre,
-        tema: book.genere,
+        tema: book.tema,
         autor: book.autor,
         desc: book.desc,
-        img: book.img
+        img: book.img,
       }).then(response => {
-        this.state.book.splice(this.state.book.findIndex(editToFind => editToFind.id === book.id), 1, response.data)
-      }).catch(error => {
-        if (!response.status) {// Si el servidor no responde 'response' no es un objeto sino texto
-          this.state.errors.push('Error: el servidor no responde');
-          console.log(response);
-        } else {
-          this.state.errors.push('Error ' + response.status + ': ' + response.message);
-        }
-      });
+        this.books.splice(this.books.findIndex(editToFind => editToFind.id === book.id), 1, response.data)
+        alert("Libro editado");
+      }).catch(response => alert('Error: no se ha añadido el registro. ' + response.message));
     },
 
     deleteBook(bookObject) {
