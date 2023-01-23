@@ -43,7 +43,7 @@
   "libros": [
     {
       "ISBN": "0130313580",
-      "nombre": "Sistemas operativos modernos 2",
+      "nombre": "Sistemas operativos modernos",
       "autor": 3,
       "desc": "El Sistemas Operativo tiene como misión administrar todos los elementos de un sistema complejo. ",
       "img": "sistemasOperativosModernos.jpeg",
@@ -105,8 +105,8 @@
       "img": "5semanasEnGlobo.jpeg"
     },
     {
-      "ISBN": "0131485210",
-      "nombre": "Structured Computer Organization 3 edit",
+      "ISBN": "0131485219",
+      "nombre": "Structured Computer Organization 3 edit 2",
       "autor": 3,
       "desc": "Una computadora digital es una máquina que puede hacer el trabajo para las personas mediante la realización de las instrucciones dadas a la misma.",
       "img": "structuredComputerOrganization.jpeg",

@@ -15,9 +15,11 @@
           <div class="card-body">
             <h5 class="card-title">{{ author.nombre }} {{ author.apellidos }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ author.nacionalidad }}</h6>
-            <button class="btn btn-secondary" title="Ver libros">
-              <i class="bi bi-person"></i>
-            </button>
+            <button class="btn btn-secondary finish">
+      <span class="material-icons" @click="$router.push(`/books-filtered/${author.id}`)"
+        >Ver libros del Autor</span
+      >
+    </button>
             
           </div>
         </div>

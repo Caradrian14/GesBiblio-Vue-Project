@@ -20,6 +20,9 @@
     </thead>
     <tbody id="tableProducts">
       <!-- AQUI INSERTAMOS -->
+      <tr class="text-success text-center" v-for="element in books" >
+        <ElementBook :key="element" :book="element"></ElementBook>
+      </tr>
       <tr class="text-success text-center" v-for="element in books">
         <ElementBook :key="element" :book="element"></ElementBook>
       </tr>
@@ -49,13 +52,6 @@ export default {
   },
   methods: {
     ...mapActions(useCounterStore, ['getBooksByAuthor']),
-    loaderBooks(){
-      if (this.id) {
-      this.loadBooksAuthor(this.id)
-    }else{
-      this.loadAllBooks();
-    }
-    },
     loadBooksAuthor(id){
       axios.get(url + '/libros?autor=' + id)
         .then(response => { this.books = response.data })
@@ -68,7 +64,6 @@ export default {
           }
         })
     },
-
     loadAllBooks(){
       axios.get(url + '/libros')
         .then(response => { this.books = response.data })
@@ -81,22 +76,23 @@ export default {
             alert('Error ' + response.status + ': ' + response.message);
           }
         })
-    },
-
+    }
   },
   computed: {
     ...mapState(useCounterStore, {
       generes: "generes",
     }),
-
   },
-
-  mounted(){
-    this.loaderBooks();
+  async mounted() {
+    if (this.id) {
+      this.loadBooksAuthor(this.id)
+    }else{
+      this.loadAllBooks();
+    }
   },
   watch: {
     id(newValue, oldValue) {
-      this.loaderBooks()
+      this.books = useCounterStore.books;
     },
   },
 };

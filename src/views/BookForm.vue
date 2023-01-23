@@ -1,7 +1,13 @@
 <template>
   <div>
     <h1>Formulario para insertar libros</h1>
-    <div class="row">
+    <div v-if='errores.length>0'>
+      <p><b>Por favor, solucina los siguientes errores:</b></p>
+      <ul>
+        <li v-for="error in errores">{{ error }}</li>
+      </ul>
+    </div>
+    <div class="row" @submit="checkForm">
       <div class="col-sm-6 col-md-4 col-lg-4 hideElement">
         <form id="new-prod">
           <fieldset>
@@ -92,10 +98,20 @@
             />
             <span class="error"></span>
           </div>
-          <button type="submit" class="btn btn-default btn-dark" v-if="id" @click="editNewBook">
+          <button
+            type="submit"
+            class="btn btn-default btn-dark"
+            v-if="id"
+            @click="editNewBook"
+          >
             Editar
           </button>
-          <button type="submit" class="btn btn-default btn-dark" v-else @click="addNewBook">
+          <button
+            type="submit"
+            class="btn btn-default btn-dark"
+            v-else
+            @click="addNewBook"
+          >
             Enviar
           </button>
           <button type="reset" class="btn btn-danger">Reset</button>
@@ -120,16 +136,14 @@ export default {
   data() {
     return {
       book: {},
+      errores: [],
     };
   },
   computed: {
-    ...mapState(
-      useCounterStore,
-      {
-        generes: "generes",
-        authors: "authors",
-      },
-    ),
+    ...mapState(useCounterStore, {
+      generes: "generes",
+      authors: "authors",
+    }),
     addNewBook() {
       if (this.book.nombre && this.book.ISBN && this.book.autor) {
         this.addBook(this.book);
@@ -140,9 +154,37 @@ export default {
         this.editBook(this.book);
       }
     },
+    checkForm(event) {
+      this.errores=[];    // borramos los errores anteriores
+
+      //nombre
+      if (!this.book.nombre) {
+        this.errores.push('El nombre es obligatorio');
+      } else if (this.user.nombre.length<2 || this.user.nombre.length>50) {
+        this.errores.push('La longitud del nombre debe estar entre 2 y 50 caracteres');
+      }
+
+      if (!this.book.ISBN) {
+        this.errores.push('El nombre es obligatorio');
+      } else if (this.user.ISBN.length === 10) {
+        this.errores.push('La longitud del nombre debe ser de 10');
+      }
+
+      if (!this.book.tema) {
+        this.errores.push('Debes escoger el genero');
+      }
+
+      if (!this.book.autor) {
+        this.errores.push('Debes escoger el autor');
+      }
+      if (this.errores.length>0) {
+        event.preventDefault();
+      }
+    }
+
   },
   methods: {
-    ...mapActions(useCounterStore, ['addBook', 'getBookById', 'editBook'])
+    ...mapActions(useCounterStore, ["addBook", "getBookById", "editBook"]),
   },
   async mounted() {
     if (this.id) {
