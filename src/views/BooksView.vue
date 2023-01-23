@@ -35,17 +35,37 @@ import { useCounterStore } from "../stores/counter";
 import ElementBook from "../components/ElementBook.vue";
 import { mapState, mapActions } from "pinia";
 export default {
+  data() {
+    return {
+      books: {},
+    };
+  },
   components: {
     ElementBook,
   },
   props: {
     id: String,
   },
+  methods: {
+    ...mapActions(useCounterStore, ['getBooksByAuthor'])
+  },
+  async mounted() {
+    if (this.id) {
+      this.books = (await this.getBooksByAuthor(this.id)) || {};
+    }else{
+      this.data.books = useCounterStore.books;
+    }
+  },
   computed: {
     ...mapState(useCounterStore, {
       books: "books",
       generes: "generes",
     }),
+  },
+  watch: {
+    id(newValue, oldValue) {
+      this.books = useCounterStore.books;
+    },
   },
 };
 </script>

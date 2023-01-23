@@ -105,15 +105,8 @@
       "img": "5semanasEnGlobo.jpeg"
     },
     {
-      "ISBN": "1234567890",
-      "nombre": "asss",
-      "autor": 1,
-      "img": "unViajeALaLuna.jpeg",
-      "id": 8
-    },
-    {
       "ISBN": "0131485210",
-      "nombre": "Structured Computer Organization 2",
+      "nombre": "Structured Computer Organization 3 edit",
       "autor": 3,
       "desc": "Una computadora digital es una máquina que puede hacer el trabajo para las personas mediante la realización de las instrucciones dadas a la misma.",
       "img": "structuredComputerOrganization.jpeg",

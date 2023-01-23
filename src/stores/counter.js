@@ -13,7 +13,12 @@ export const useCounterStore = defineStore('counter', {
       books: []
     }
   },
-
+  getters: {
+    // reciben como primer parámetro el 'state'
+    getGenereById: (state) => (id) => {
+      return state.generes.find((genere) => genere.id === id)
+    },
+  },
   actions: {
     addBook(book) {
       axios.post(url + '/libros',
@@ -36,11 +41,11 @@ export const useCounterStore = defineStore('counter', {
     editBook(book) {
       axios.put(url + '/libros/' + book.id, {
         ISBN: book.ISBN,
-          nombre: book.nombre,
-          tema: book.genere,
-          autor: book.autor,
-          desc: book.desc,
-          img: book.img
+        nombre: book.nombre,
+        tema: book.genere,
+        autor: book.autor,
+        desc: book.desc,
+        img: book.img
       }).then(response => {
         this.state.book.splice(this.state.book.findIndex(editToFind => editToFind.id === book.id), 1, response.data)
       }).catch(error => {
@@ -101,8 +106,11 @@ export const useCounterStore = defineStore('counter', {
 
     async getBooksByAuthor(id) {
       try {
+        id = parseInt(id);
         const response = await axios.get(url + '/libros')
-        return response.data
+        var data = response.data;
+        var dataFilter = data.filter(book => book.autor === id)
+        return dataFilter;
       } catch (err) {
         if (!response.status) {// Si el servidor no responde 'response' no es un objeto sino texto
           this.state.errors.push('Error: el servidor no responde');
