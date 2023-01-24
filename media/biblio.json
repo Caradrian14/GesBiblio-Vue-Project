@@ -104,24 +104,6 @@
       "autor": 1,
       "desc": "El doctor Fergusson emprende un viaje aéreo en un globo construido según su propio diseño: el Victoria. Sus compañeros de empresa son Dick Kennedy y el criado Joe.",
       "img": "5semanasEnGlobo.jpeg"
-    },
-    {
-      "ISBN": "0131485219",
-      "nombre": "Structured Computer Organization 3 edit 2",
-      "autor": 3,
-      "desc": "Una computadora digital es una máquina que puede hacer el trabajo para las personas mediante la realización de las instrucciones dadas a la misma.",
-      "img": "structuredComputerOrganization.jpeg",
-      "id": 9,
-      "tema": 8
-    },
-    {
-      "ISBN": "1234567890",
-      "nombre": "aaaaaaaaaaaaaa",
-      "tema": 1,
-      "autor": 1,
-      "desc": "aaaaaa",
-      "img": "laSirenita.jpeg",
-      "id": 10
     }
   ]
 }
